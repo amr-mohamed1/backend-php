@@ -1,37 +1,20 @@
 <?php
-$username = null;
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-    // 1- get -> $_GET['name_of_the_input']
-    // 2- post -> $_POST['name_of_the_input']
+    ob_start();
+    session_start();
+    if(!isset($_SESSION['user_email'])){
+        header("Location:login.php");
+    }
 
-    $username = $_POST['user_name'] . "<br>";
-    echo $_POST['email'] . "<br>";
-    echo $_POST['password'];
-}
-
+    require_once("Includes/template/header.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']?>">
-        <input type="text" name="user_name">
-        <input type="email" name="email">
-        <input type="password" name="password">
-        <input type="submit">
-    </form>
+    <h3>Welcome Back You Are Loggin Now mr. <?php echo $_SESSION['user_email'] ?></h3>
 
 
-    <?php if(isset($username)){ ?>
+    <a href="logout.php">Logout</a>
 
-        <h3><?php echo $username ?></h3>
 
-    <?php } ?>
 
-</body>
-</html>
+<?php
+require_once("Includes/template/footer.php");
+ob_end_flush();
